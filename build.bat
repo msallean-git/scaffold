@@ -13,6 +13,11 @@ if %errorlevel% neq 0 (
 echo.
 echo Build successful: scaffold.exe
 echo.
+echo Installing to %USERPROFILE%\go\bin\scaffold.exe...
+if not exist "%USERPROFILE%\go\bin" mkdir "%USERPROFILE%\go\bin"
+copy /y scaffold.exe "%USERPROFILE%\go\bin\scaffold.exe" >nul
+echo Installed.
+echo.
 echo Quick start:
 echo   scaffold init
 echo   scaffold list
