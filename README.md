@@ -179,6 +179,26 @@ You are a senior backend developer...
 <!-- scaffold:end -->
 ```
 
+## Concurrent Safety
+
+scaffold uses a file-based lock (`.scaffold.lock` in the project root) to
+prevent multiple instances from corrupting shared files when running concurrently.
+
+The write commands (`use`, `reset`, `create`) acquire the lock before touching
+any files and release it automatically when done.
+
+**Behaviour under contention:**
+
+- If another scaffold process is already running, the command retries every 50 ms
+  for up to **5 seconds**, then exits with:
+  ```
+  error: scaffold is already running (lock held by PID <pid>)
+  ```
+- If the lock file is older than **30 seconds** (e.g. left by a crashed process),
+  it is treated as stale, removed automatically, and the command proceeds normally.
+
+The lock file is listed in `.gitignore` and is never committed.
+
 ## License
 
 MIT
