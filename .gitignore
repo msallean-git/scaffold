@@ -1,0 +1,11 @@
+# Binaries
+scaffold
+scaffold.exe
+
+# Go build cache
+*.test
+*.out
+
+# OS
+.DS_Store
+Thumbs.db
