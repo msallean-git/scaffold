@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/kenlo/scaffold/internal/config"
+	"github.com/kenlo/scaffold/internal/lock"
 	"github.com/kenlo/scaffold/internal/output"
 )
 
@@ -20,6 +21,12 @@ var resetCmd = &cobra.Command{
 		if err != nil {
 			return fmt.Errorf("no scaffold.config.json found — run 'scaffold init' first")
 		}
+
+		lk, err := lock.Acquire(root)
+		if err != nil {
+			return fmt.Errorf("%w", err)
+		}
+		defer lk.Release()
 
 		for _, target := range cfg.Targets {
 			targetPath := filepath.Join(root, target.Path)

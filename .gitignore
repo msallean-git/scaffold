@@ -9,3 +9,6 @@ scaffold.exe
 # OS
 .DS_Store
 Thumbs.db
+
+# Scaffold lock file
+.scaffold.lock
